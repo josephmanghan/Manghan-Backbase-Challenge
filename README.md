@@ -59,7 +59,7 @@ $ npm install
 Not required, but this extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
 
 ## Usage 
-1. Place desired CSV files in the csv_input folder. Processed CSv files will appear in the csv_output folder
+1. Place CSV files intended for testing in the csv_input folder. Processed CSV files will appear in the csv_output folder
 2. Open the relevant directory within the terminal
 3. Run the following command in the terminal, editing input_file.csv and output_file.csv as appropriate:
 ```console
@@ -68,10 +68,10 @@ $ node manghan-backbase-challenge.js input_file.csv output_file.csv
 
 ## Assumptions
 Several assumptions have been made with regards to input data and how that data is processed:
-- Input CSV file data is ordered chronologically.
-- The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable.
-- If a customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the customer wishes to receive the greatest amount possible. This will be reflected in the ledger.
-- If a customer attempts to make a savings account withdrawal, but no funds are available, the card is "declined" and the transaction is removed from the ledger.
+- Input CSV file data is ordered chronologically
+- The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable
+- If a customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the customer wishes to receive the greatest amount possible. This will be reflected in the ledger
+- If a customer attempts to make a savings account withdrawal, but no funds are available, the card is "declined" and the transaction is removed from the ledger
 
 As a final note, I was able to make the script more robust by enabling it to handle numerous accounts. *AccountID* now tracks individual customers, with both a current and savings account attached to an ID. This means that testing does not need to be limited to 1 file per customer.
 
