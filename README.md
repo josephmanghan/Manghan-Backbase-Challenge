@@ -4,7 +4,7 @@
   </a>
   <h1> Joseph Manghan - Backbase Coding Challenge</h1>
   <p>
-    <em>Manghan-Backbase-Challenge.js</em> automatically transfers funds <br>from a customer's savings account to their current account <br>if an overdraft is in use       and if funds are available. 
+    <em>manghan-backbase-challenge.js</em> automatically transfers funds <br>from a customer's savings account to their current account <br>if an overdraft is in use       and if funds are available. 
   </p>
 </div>
 
