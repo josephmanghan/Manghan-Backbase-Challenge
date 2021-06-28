@@ -88,4 +88,6 @@ CSV files have been provided for testing, a rundown of which is given below, but
 - **Day-end DateTime** - the function for making automatic transfer ledger entries involves taking the date from the inputted DateTime when a new data has been recognised in the CSV file. Unfortunately this does not translate to the final check at file-end, and so the DateTime in this case mirrors the DateTime of the final transaction in the input CSV. Ideally this entry would reflect a subsequent date with a time of 00:00:00, as with previous day-end amendments.
 
 ## Contact
-Dr Joseph Manghan - [website](https://www.josephmanghan.com/) - josephmanghan@gmail.com
+Dr Joseph Manghan - josephmanghan@gmail.com
+
+[Personal website](https://www.josephmanghan.com/) -
