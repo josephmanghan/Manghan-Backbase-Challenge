@@ -77,8 +77,8 @@ Several assumptions have been made with regards to input data and how that data 
 
 CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV files by following the instructions under **Usage**. 
 - Test_1: a copy of the CSV file provided in the task brief
-- Test_2: automatic transfer test for day-end and file-end
-- Test_3: savings withdrawal - requested funds unavailable, maximum amount withdrawn
+- Test_2: test for day-end and file-end automatic transfer
+- Test_3: savings withdrawal test - requested funds unavailable, maximum amount withdrawn
 - Test_4: automatic transfer test for maximum possible transfer from savings to current account, when total sum to black in unavailable
 - Test_5: combined above
 - Test_6: large randomised test
