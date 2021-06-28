@@ -64,8 +64,8 @@ $ node manghan-backbase-challenge.js
 Several assumption have been made with regards to input data and how that data is processed:
 - Input CSV file data is ordered chronologically
 - The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable
-- The customer wishes to receive the greatest possible amount from their savings account, if they attempt to make a withdrawal but requested amount is unavailable
-- If a customer attempts to make a withdrawal from their savings account but £0 funds are available, the transaction is removed from the ledger
+- If the customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the cusomter wishes receive the greatest amount possible
+- If a customer attempts to make a withdrawal from their savings account but £0 funds are available, the card is "declined" and the transaction is removed from the ledger
 
 ## Testing
 
