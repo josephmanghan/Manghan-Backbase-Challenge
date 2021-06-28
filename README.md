@@ -27,9 +27,7 @@ The goal of the challenge is to save customers money by minimising their overdra
 
 The script receives data from an input CSV file containing a ledger of transactions. It processes this data, making automatic transferrals where possible at the end of each day. Finally, it produces a new CSV file containing both the input and amendment ledger entries.
 
-<img src="https://i.ibb.co/YZnSQXy/csv-update-illustration.png" alt="Logo" style="border: 1px solid #000">
-
-![CSV update illustration](https://i.ibb.co/YZnSQXy/csv-update-illustration.png)
+<img src="https://i.ibb.co/YZnSQXy/csv-update-illustration.png" alt="CSV update illustration" align="center">
 
 ## Prerequisites
 
