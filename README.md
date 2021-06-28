@@ -57,8 +57,9 @@ $ npm install
 Not required, but this extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
 
 ## Usage 
-1. Open the relevant directory within the terminal
-2. Run the following command in the terminal, editing input_file.csv and output_file.csv as appropriate:
+1. Place desired CSV files in the csv_input folder. Processed CSv files will appear in the csv_output folder
+2. Open the relevant directory within the terminal
+3. Run the following command in the terminal, editing input_file.csv and output_file.csv as appropriate:
 ```console
 $ node manghan-backbase-challenge.js input_file.csv output_file.csv
 ```
