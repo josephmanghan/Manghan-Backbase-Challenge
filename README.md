@@ -34,21 +34,21 @@ The script receives data from an input CSV file containing a ledger of transacti
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/) (v8.16.0 or higher)
+[Node.js](https://nodejs.org/en/download/) (v8.16.0 or higher)
 
-- [csv-parser](https://github.com/mafintosh/csv-parser)
+[csv-parser](https://github.com/mafintosh/csv-parser)
 
 Using npm:
 ```console
 $ npm install csv-parser
 ```
-- [csv-writer](https://www.npmjs.com/package/csv-writer)
+[csv-writer](https://www.npmjs.com/package/csv-writer)
 
 Using npm:
 ```console
 $ npm i csv-writer
 ```
-- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
+[Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
 
 Not required, but this extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
 
