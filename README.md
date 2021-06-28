@@ -31,6 +31,7 @@ The script receives data from an input CSV file containing a ledger of transacti
 <div align="center">
   <img src="https://i.ibb.co/YZnSQXy/csv-update-illustration.png" alt="CSV update illustration">
 </div>
+
 ### Constraints
 
 - Both accounts start at £0 
