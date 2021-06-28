@@ -54,7 +54,7 @@ Not required, but this extension (available in both VS Code and Atom) can be ins
 
 ## Usage 
 1. Search for ‘CHANGE INPUT’ in the js file to edit the input CSV file path
-2. Search for ‘CHANGE OUTPUT in the js file to edit the output CSV file path
+2. Search for ‘CHANGE OUTPUT' in the js file to edit the output CSV file path
 3. Run the following in the terminal:
 ```console
 $ node manghan-backbase-challenge.js
