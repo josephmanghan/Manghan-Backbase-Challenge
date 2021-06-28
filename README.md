@@ -65,7 +65,7 @@ Several assumption have been made with regards to input data and how that data i
 - Input CSV file data is ordered chronologically
 - The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable
 - If a customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the customer wishes to receive the greatest amount possible
-- If a customer attempts to make a withdrawal from their savings account but £0 funds are available, the card is "declined" and the transaction is removed from the ledger
+- If a customer attempts to make a savings account withdrawal, but no funds available, the card is "declined" and the transaction is removed from the ledger
 
 ## Testing
 
