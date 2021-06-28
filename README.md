@@ -42,14 +42,14 @@ The script receives data from an input CSV file containing a ledger of transacti
 
 [Node.js](https://nodejs.org/en/download/) (v8.16.0 or higher)
 
-Install all dependencies using npm:
-```console
-$ npm install
-```
 [csv-parser](https://github.com/mafintosh/csv-parser)
 
 [csv-writer](https://www.npmjs.com/package/csv-writer)
 
+Install all dependencies using npm:
+```console
+$ npm install
+```
 - - -
 
 [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
