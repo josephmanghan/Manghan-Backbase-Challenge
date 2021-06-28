@@ -5,6 +5,20 @@
 
 *Manghan-Backbase-Challenge.js* automatically transfers funds from a customer's savings account to their current account if an overdraft is in use and if funds are available. 
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#about">About</a></li>
+    <li><a href="#Prerequisites">Prerequisites</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#assumptions">Assumptions</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#missing-features">Missing Features</a></li>
+  </ol>
+</details>
+
 ## About
 
 The goal of the challenge is to save customers money by minimising their overdraft fees. 
@@ -27,7 +41,7 @@ $ npm install csv-parser
 
 ## Testing
 
-## Missing features
+## Missing Features
 
 ## Install
 
