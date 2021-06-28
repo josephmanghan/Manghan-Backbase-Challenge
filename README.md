@@ -60,14 +60,26 @@ Not required, but this extension (available in both VS Code and Atom) can be ins
 $ node manghan-backbase-challenge.js
 ```
 
-
 ## Assumptions
+Several assumption have been made with regards to input data and how that data is processed:
+- Input CSV file data is ordered chronologically
+- The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable
+- The customer wishes to receive the greatest possible amount from their savings account, if they attempt to make a withdrawal but requested amount is unavailable
+- If a customer attempts to make a withdrawal from their savings account but £0 funds are available, the transaction is removed from the ledger
 
 ## Testing
 
-## Missing Features
+CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV by following the instructions above. 
+- Test_1: a copy of the CSV file provided in the task brief
+- Test_2: automatic transfer test for day-end and file-end
+- Test_3: savings withdrawal - requested funds unavailable, maximum amount withdrawn
+- Test_4: automatic transfer test for maximum possible transfer from savings to current account, when total sum to black in unavailable
+- Test_5: combined above
+- Test_6: large randomised test
 
-## Install
+## Missing Features
+- **Card decline** - when a withdrawal is attempted from a savings account that has £0 available, the transaction is removed from the ledger as no transaction was completed. However, ideally this data would reflect a “declined” withdrawal. I felt the removal of the entry was more appropriate than adding a £0.00 transaction to the ledger.
+- **Day-end DateTime** - the function for making automatic transfer ledger entries involves taking the date from the inputted DateTime when a new data has been recognised in the CSV file. Unfortunately this does not translate to the final check at file-end, and so the DateTime in this case mirrors the DateTime of the final transaction in the input CSV. Ideally this entry would reflect a subsequent date with a time of 00:00:00, as with previous day-end amendments.
 
 - - -
 
