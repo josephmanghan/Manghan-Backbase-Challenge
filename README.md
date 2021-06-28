@@ -61,7 +61,7 @@ Not required, but this extension (available in both VS Code and Atom) can be ins
 ## Usage 
 1. Place CSV files intended for testing in the *csv_input* folder. Processed CSV files will appear in the *csv_output* folder
 2. Open the relevant directory within the terminal
-3. Run the following command in the terminal, editing input_file.csv and output_file.csv as appropriate:
+3. Run the following command in the terminal, editing 'input_file.csv' and 'output_file.csv' as appropriate:
 ```console
 $ node manghan-backbase-challenge.js input_file.csv output_file.csv
 ```
