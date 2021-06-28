@@ -3,7 +3,7 @@
 # Manghan-Backbase-Challenge
 "Save customers money by minimising their overdraft fees."
 
-[![logo][logo]]
+[logo]
 
 
 ## Install
