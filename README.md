@@ -1,4 +1,4 @@
-[logo]: 	https://svgshare.com/i/YZx.svg
+[logo]: 	https://svgshare.com/i/Y_7.svg
 
 # Manghan-Backbase-Challenge
 "Save customers money by minimising their overdraft fees."
