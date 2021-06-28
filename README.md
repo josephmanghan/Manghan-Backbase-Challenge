@@ -17,7 +17,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#assumptions">Assumptions</a></li>
     <li><a href="#testing">Testing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#missing-features">Missing Features</a></li>
   </ol>
 </details>
