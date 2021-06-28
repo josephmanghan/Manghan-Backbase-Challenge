@@ -42,25 +42,25 @@ let ledger_tracker = -1;
 // Stores values used in automatic transferrals & new ledger entries
 let temp_value;
 
-// Used in creating correct AccountIDs for ammendment ledger entries
+// Used in creating correct AccountIDs for amendment ledger entries
 let ID_array = [];
-let ammendmentID;
+let amendmentID;
 
-// Used in creating correct AccountIDs for ammendment ledger entries at file end
+// Used in creating correct AccountIDs for amendment ledger entries at file end
 let ID_array2 = [];
 let ID_tracker2 = 0;
-let ammendmentID_2;
+let amendmentID_2;
 
 // Used to notify when a new date has been received
 const date_tracker = [];
-// Used to substr date information from DateTime for ammendment ledger entries
+// Used to substr date information from DateTime for amendment ledger entries
 let date_only;
 
 
 
 // CSV PARSER
 // ? CHANGE INPUT
-fs.createReadStream('csv_input/test_2.csv')
+fs.createReadStream('csv_input/test_1.csv')
 
     .pipe(csv())
     .on('data', function (data) {
@@ -91,7 +91,7 @@ fs.createReadStream('csv_input/test_2.csv')
             }
             account_maker(AccountID);
 
-            // ! AMMENDMENT TRANSFERS AND LEDGER ENTRIES
+            // ! AMENDMENT TRANSFERS AND LEDGER ENTRIES
             // If date is new, transfers from SAVINGS to CURRENT where possible and creates a ledger entry
             function auto_transfer() {
 
@@ -104,11 +104,11 @@ fs.createReadStream('csv_input/test_2.csv')
                     // Completes auto_transfers before CSV input if date_only is new
                     for (const key in Accounts) {
 
-                        // Used to apply correct AccountID to ammendment ledger entries
+                        // Used to apply correct AccountID to amendment ledger entries
                         ID_array = Object.keys(Accounts);
 
                         ID_tracker++;
-                        ammendmentID = Number(ID_array[ID_tracker]);
+                        amendmentID = Number(ID_array[ID_tracker]);
 
                         // * Transfers SAVINGS to CURRENT if sum to black is available
                         if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
@@ -133,11 +133,11 @@ fs.createReadStream('csv_input/test_2.csv')
 
                                 // * Creates new ledger entry: deduction to SAVINGS
                                 ledger_tracker++;
-                                Ledger[ledger_tracker] = new LedgerEntry(ammendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
+                                Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
 
                                 // * Creates new ledger entry: increment to CURRENT
                                 ledger_tracker++;
-                                Ledger[ledger_tracker] = new LedgerEntry(ammendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
+                                Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
                             }
 
                             // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
@@ -162,11 +162,11 @@ fs.createReadStream('csv_input/test_2.csv')
 
                                     // * Creates new ledger entry: deduction to SAVINGS
                                     ledger_tracker++;
-                                    Ledger[ledger_tracker] = new LedgerEntry(ammendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
+                                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
 
                                     // * Creates new ledger entry: increment to CURRENT
                                     ledger_tracker++;
-                                    Ledger[ledger_tracker] = new LedgerEntry(ammendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
+                                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
                                 }
                         }
                         temp_value = 0;
@@ -183,7 +183,7 @@ fs.createReadStream('csv_input/test_2.csv')
                 if (AccountType === "SAVINGS" && TransactionValue < 0 && Accounts[AccountID].savings === 0) {
                     ledger_tracker--;
                     return;
-                // If SAVINGS does not have enough for full withdrawal, ledger entry reflects ammendment
+                // If SAVINGS does not have enough for full withdrawal, ledger entry reflects amendment
                 } else if (AccountType === "SAVINGS" && TransactionValue < 0 && Math.abs(TransactionValue) > Accounts[AccountID].savings) {
                     Ledger[ledger_tracker] = new LedgerEntry(AccountID, AccountType, InitiatorType, DateTime, -Accounts[AccountID].savings);
 
@@ -233,12 +233,12 @@ fs.createReadStream('csv_input/test_2.csv')
     .on('end', () => {
 
         // ! FINAL CHECK FOR POSSIBLE SAVINGS TO CURRENT TRANSFERS AT FILE END
-        function finalAmmendments() {
+        function finalAmendments() {
             for (const key in Accounts) {
 
-                // Used to apply correct AccountID to ammendment ledger entries at file end
+                // Used to apply correct AccountID to amendment ledger entries at file end
                 ID_array2 = Object.keys(Accounts);
-                ammendmentID_2 = Number(ID_array2[ID_tracker2]);
+                amendmentID_2 = Number(ID_array2[ID_tracker2]);
 
                 // * Transfers SAVINGS to CURRENT if sum to black is available
                 if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
@@ -264,11 +264,11 @@ fs.createReadStream('csv_input/test_2.csv')
                         // DateTime used as correct dayend date is unknown
                         // * Creates new ledger entry: deduction to SAVINGS
                         ledger_tracker++;
-                        Ledger[ledger_tracker] = new LedgerEntry(ammendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
+                        Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
 
                         // * Creates new ledger entry: increment to CURRENT
                         ledger_tracker++;
-                        Ledger[ledger_tracker] = new LedgerEntry(ammendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
+                        Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
                     }
 
                     // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
@@ -294,17 +294,17 @@ fs.createReadStream('csv_input/test_2.csv')
                             // * Creates new ledger entry: deduction to SAVINGS
                             // DateTime used as correct dayend date is unknown
                             ledger_tracker++;
-                            Ledger[ledger_tracker] = new LedgerEntry(ammendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
+                            Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
 
                             // * Creates new ledger entry: increment to CURRENT
                             ledger_tracker++;
-                            Ledger[ledger_tracker] = new LedgerEntry(ammendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
+                            Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
                         }
                 }
                 ID_tracker2++;
             }
         }
-        finalAmmendments();
+        finalAmendments();
 
         // ! Turns all AccountIDs to numbers and TransactionValues into 2decimal strings
         function valueFunction() {
@@ -342,7 +342,7 @@ fs.createReadStream('csv_input/test_2.csv')
         const csvWriter = createCsvWriter({
 
             // ? CHANGE OUTPUT
-            path: 'csv_output/test_2_update.csv',
+            path: 'csv_output/test_1_update.csv',
             header: [{
                     id: 'accountid',
                     title: 'AccountID'
