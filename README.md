@@ -42,6 +42,8 @@ The script receives data from an input CSV file containing a ledger of transacti
 
 [Node.js](https://nodejs.org/en/download/) (v8.16.0 or higher)
 
+- - -
+
 [csv-parser](https://github.com/mafintosh/csv-parser)
 
 [csv-writer](https://www.npmjs.com/package/csv-writer)
