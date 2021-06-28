@@ -69,7 +69,7 @@ Several assumption have been made with regards to input data and how that data i
 
 ## Testing
 
-CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV by following the instructions under **Usage**. 
+CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV files by following the instructions under **Usage**. 
 - Test_1: a copy of the CSV file provided in the task brief
 - Test_2: automatic transfer test for day-end and file-end
 - Test_3: savings withdrawal - requested funds unavailable, maximum amount withdrawn
