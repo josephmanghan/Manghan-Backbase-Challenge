@@ -84,7 +84,7 @@ CSV files have been provided for testing, a rundown of which is given below, but
 - Test_6: large randomised test
 
 ## Missing Features
-- **Card decline** - when a withdrawal is attempted from a savings account with £0, the transaction is removed from the ledger as no transaction was completed. However, ideally this data would reflect a “declined” withdrawal. I felt the removal of the entry was more appropriate than adding a £0.00 transaction to the ledger.
+- **Card decline** - when a withdrawal is attempted from a savings account with £0.00, the transaction is removed from the ledger as no transaction was completed. However, ideally this data would reflect a “declined” withdrawal. I felt the removal of the entry was more appropriate than adding a £0.00 transaction to the ledger.
 - **Day-end DateTime** - the function for making automatic transfer ledger entries involves taking the date from the inputted DateTime when a new date has been recognised in the input CSV file. 00:00:00 is appended to this, which signifies the end of one day and the beginning of another. Unfortunately this does not translate to the final check at file-end as the subsequent date is unknown to the script, and so the DateTime in this case mirrors the DateTime of the final transaction in the input CSV. Ideally this entry would reflect a subsequent date with a time of 00:00:00, as with previous day-end amendments.
 
 ## Contact
