@@ -18,6 +18,7 @@
     <li><a href="#assumptions">Assumptions</a></li>
     <li><a href="#testing">Testing</a></li>
     <li><a href="#missing-features">Missing Features</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -27,7 +28,11 @@ The goal of the challenge is to save customers money by minimising their overdra
 
 The script receives data from an input CSV file containing a ledger of transactions. It processes this data, making automatic transferrals where possible at the end of each day. Finally, it produces a new CSV file containing both the input and amendment ledger entries.
 
-Both accounts start at £0 | The overdraft of the current account is unlimited | The savings account balance cannot drop below zero
+### Constraints
+
+- Both accounts start at £0 
+- The overdraft of the current account is unlimited 
+- The savings account balance cannot drop below zero
 
 <div align="center">
   <img src="https://i.ibb.co/YZnSQXy/csv-update-illustration.png" alt="CSV update illustration">
@@ -81,3 +86,6 @@ CSV files have been provided for testing, a rundown of which is given below, but
 ## Missing Features
 - **Card decline** - when a withdrawal is attempted from a savings account that has £0 available, the transaction is removed from the ledger as no transaction was completed. However, ideally this data would reflect a “declined” withdrawal. I felt the removal of the entry was more appropriate than adding a £0.00 transaction to the ledger.
 - **Day-end DateTime** - the function for making automatic transfer ledger entries involves taking the date from the inputted DateTime when a new data has been recognised in the CSV file. Unfortunately this does not translate to the final check at file-end, and so the DateTime in this case mirrors the DateTime of the final transaction in the input CSV. Ideally this entry would reflect a subsequent date with a time of 00:00:00, as with previous day-end amendments.
+
+## Contact
+Dr Joseph Manghan - [website](https://www.josephmanghan.com/) - josephmanghan@gmail.com
