@@ -35,7 +35,7 @@ The script receives data from an input CSV file containing a ledger of transacti
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/) (v8.16.0 or higher)
-<br>
+
 - [csv-parser](https://github.com/mafintosh/csv-parser)
 
 Using npm:
@@ -49,7 +49,7 @@ $ npm install csv-parser
 npm i csv-writer
 ```
 - [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
-<br>
+
 Not required, but the Better Comments extension (available in both VS Code and Atom) can be installed to comments with intended formatting. 
 
 ## Usage 
