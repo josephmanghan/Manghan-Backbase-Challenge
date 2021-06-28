@@ -44,7 +44,7 @@ The script receives data from an input CSV file containing a ledger of transacti
 
 Install all dependencies using npm:
 ```console
-$ npm install csv-parser
+$ npm install
 ```
 [csv-parser](https://github.com/mafintosh/csv-parser)
 
