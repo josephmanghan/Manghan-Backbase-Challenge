@@ -2,6 +2,10 @@ const csv = require('csv-parser')
 const fs = require('fs')
 
 // ! Global variables
+// * CLI interface variables
+const csv_input = 'csv_input/' + process.argv.slice(2, 3);
+const csv_output = 'csv_output/' + process.argv.slice(3, 4);
+
 // * Variables for storing CSV data
 let AccountID, AccountType, InitiatorType, DateTime, TransactionValue;
 // Used to convert string CSV data to floating point number
@@ -59,8 +63,7 @@ let date_only;
 
 
 // CSV PARSER
-// ? CHANGE INPUT
-fs.createReadStream('csv_input/test_1.csv')
+fs.createReadStream(csv_input)
 
     .pipe(csv())
     .on('data', function (data) {
@@ -342,8 +345,7 @@ fs.createReadStream('csv_input/test_1.csv')
         const createCsvWriter = require('csv-writer').createObjectCsvWriter;
         const csvWriter = createCsvWriter({
 
-            // ? CHANGE OUTPUT
-            path: 'csv_output/test_1_update.csv',
+            path: csv_output,
             header: [{
                     id: 'accountid',
                     title: 'AccountID'
