@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://svgshare.com/i/Y_7.svg" alt="Logo" width="120" height="120">
+  <a href="https://www.josephmanghan.com/" target="_blank">
+    <img src="https://svgshare.com/i/Y_7.svg" alt="Logo" width="120" height="120">
+  </a>
 <h1 align="center"> Joseph Manghan - Backbase Coding Challenge</h1>
 
   <p>
