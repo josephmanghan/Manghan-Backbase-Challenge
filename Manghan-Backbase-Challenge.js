@@ -84,7 +84,7 @@ fs.createReadStream('csv_input/test_1.csv')
             // ! ACCOUNT MAKER - Checks if ID is new, creates account if needed
             function account_maker(AccountID) {
 
-                // toString: used in comparison as Accounts data is a string, whereas input data is a number
+                // toString: used in comparison as Accounts data is a string, whereas input data is an integer
                 if (!Object.keys(Accounts).includes(AccountID.toString())) {
                     Accounts[AccountID] = new AccountInfo();
                 }
@@ -131,6 +131,7 @@ fs.createReadStream('csv_input/test_1.csv')
                             if (temp_value > 0) {
 
 
+                                // DateTime reflects date of current day with a time of 00:00:00
                                 // * Creates new ledger entry: deduction to SAVINGS
                                 ledger_tracker++;
                                 Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
@@ -156,7 +157,7 @@ fs.createReadStream('csv_input/test_1.csv')
                             let current_round = Accounts[key].current;
                             Accounts[key].current = parseFloat(current_round.toFixed(2));
 
-                            // Fixes LedgerEntrys being made with a 0 transaction
+                                // Fixes LedgerEntrys being made with a 0 transaction
                                 if (temp_value > 0) {
 
 
@@ -261,7 +262,7 @@ fs.createReadStream('csv_input/test_1.csv')
                     if (temp_value > 0) {
 
 
-                        // DateTime used as correct dayend date is unknown
+                        // DateTime used as correct day-end date is unknown
                         // * Creates new ledger entry: deduction to SAVINGS
                         ledger_tracker++;
                         Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
@@ -292,7 +293,7 @@ fs.createReadStream('csv_input/test_1.csv')
 
 
                             // * Creates new ledger entry: deduction to SAVINGS
-                            // DateTime used as correct dayend date is unknown
+                            // DateTime used as correct day-end date is unknown
                             ledger_tracker++;
                             Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
 
