@@ -80,7 +80,7 @@ As a final note, I was able to make the script more robust by enabling it to han
 
 CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV files by following the instructions under **Usage**. 
 - Test_1: a copy of the CSV file provided in the task brief
-- Test_2: simplified brief CSV file, for single account testings (script can now handle multiple accounts)
+- Test_2: simplified brief CSV file, for single account testing (script can now handle multiple accounts)
 - Test_3: day-end automatic transfers test
 - Test_4: savings withdrawal test - requested funds unavailable, maximum amount withdrawn
 - Test_5: automatic transfer test - maximum possible transfer from savings to current account when total sum to black in unavailable
