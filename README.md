@@ -73,6 +73,8 @@ Several assumptions have been made with regards to input data and how that data 
 - If a customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the customer wishes to receive the greatest amount possible. This will be reflected in the ledger.
 - If a customer attempts to make a savings account withdrawal, but no funds are available, the card is "declined" and the transaction is removed from the ledger.
 
+As a final note, I was able to make the script more robust by enabling it to handle numerous accounts. AccountID now tracks an individual customer, with both a current and savings account attached to that ID. This means that testing does not need to be limited to 1 file per customer.
+
 ## Testing
 
 CSV files have been provided for testing, a rundown of which is given below, but you may input your own CSV files by following the instructions under **Usage**. 
