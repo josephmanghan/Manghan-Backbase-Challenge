@@ -1,9 +1,9 @@
 [logo]: 	https://svgshare.com/i/Y_7.svg
 
-# Manghan-Backbase-Challenge
+# Joseph Manghan - Backbase Coding Challenge ![logo][logo]
 "Save customers money by minimising their overdraft fees."
 
-![logo][logo]
+
 
 
 ## Install
