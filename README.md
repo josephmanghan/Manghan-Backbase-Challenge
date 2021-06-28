@@ -1,10 +1,13 @@
 [logo]: 	https://svgshare.com/i/Y_7.svg
 
 ![logo][logo]
+<div align="center">
+  <img src="https://svgshare.com/i/Y_7.svg" alt="Logo" width="80" height="80">
 <h1 align="center"> Joseph Manghan - Backbase Coding Challenge</h1>
 
-<div align="center">
-  <em>Manghan-Backbase-Challenge.js</em> automatically transfers funds from a customer's savings account to their current account if an overdraft is in use and if funds are available. 
+  <p>
+    <em>Manghan-Backbase-Challenge.js</em> automatically transfers funds from a customer's savings account to their current account if an overdraft is in use and if funds are      available. 
+  </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
