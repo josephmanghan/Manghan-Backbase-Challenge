@@ -44,11 +44,11 @@ $ npm install csv-parser
 ```
 - [csv-writer](https://www.npmjs.com/package/csv-writer)
 ```console
-npm i csv-writer
+$ npm i csv-writer
 ```
 - [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
 
-Not required, but the Better Comments extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
+Not required, but this extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
 
 ## Usage 
 1. Search for ‘CHANGE INPUT’ in the js file to edit the input CSV file
