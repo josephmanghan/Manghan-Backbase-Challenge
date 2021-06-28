@@ -39,20 +39,25 @@ The script receives data from an input CSV file containing a ledger of transacti
 - [csv-parser](https://github.com/mafintosh/csv-parser)
 
 Using npm:
-
 ```console
 $ npm install csv-parser
 ```
 - [csv-writer](https://www.npmjs.com/package/csv-writer)
-
 ```console
 npm i csv-writer
 ```
 - [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
 
-Not required, but the Better Comments extension (available in both VS Code and Atom) can be installed to comments with intended formatting. 
+Not required, but the Better Comments extension (available in both VS Code and Atom) can be installed to view comments with intended formatting. 
 
 ## Usage 
+1. Search for ‘CHANGE INPUT’ in the js file to edit the input CSV file
+2. Search for ‘CHANGE OUTPUT in the js file to edit the output CSV file
+3. Run the following in the terminal:
+```console
+$ node manghan-backbase-challenge.js
+```
+
 
 ## Assumptions
 
