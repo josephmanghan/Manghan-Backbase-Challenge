@@ -44,11 +44,11 @@ class AccountInfo {
 let ledger_tracker = -1;
 
 // Stores values used in automatic transferrals & new ledger entries
-let temp_value;
+let transfer_value;
 
 // Used in creating correct AccountIDs for amendment ledger entries
 let ID_array = [];
-let amendmentID;
+let amendment_ID;
 
 // Used to notify when a new date has been received
 const date_tracker = [];
@@ -57,7 +57,7 @@ let date_only;
 
 // ! AMENDMENT TRANSFERS AND LEDGER ENTRIES
 // file_end_check - boolean argument instructing function of day-end/file-end check
-function amendmentFunction(file_end_check) {
+function amendment_check(file_end_check) {
     let ID_tracker = -1;
     for (const key in Accounts) {
 
@@ -65,100 +65,74 @@ function amendmentFunction(file_end_check) {
         ID_array = Object.keys(Accounts);
 
         ID_tracker++;
-        amendmentID = Number(ID_array[ID_tracker]);
+        amendment_ID = Number(ID_array[ID_tracker]);
 
         // * Transfers SAVINGS to CURRENT if sum to black is available
         if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
 
             // Finds the sum needed to bring CURRENT into the black 
-            temp_value = Math.abs(Accounts[key].current);
+            transfer_value = Math.abs(Accounts[key].current);
 
-            // * Deducts SAVINGS
-            Accounts[key].savings -= temp_value;
-            // Rounds SAVINGS to 2decimal places
-            let savings_round = Accounts[key].savings;
-            Accounts[key].savings = parseFloat(savings_round.toFixed(2));
-            // * Increments CURRENT
-            Accounts[key].current += temp_value;
-            // Rounds CURRENT to 2decimal places
-            let current_round = Accounts[key].current;
-            Accounts[key].current = parseFloat(current_round.toFixed(2));
+            amendment_function();
 
             // Solves LedgerEntry being made with a 0 transaction
-            if (temp_value > 0) {
+            if (transfer_value > 0) {
 
-                // ! If a new date is recognised, transfers occur
-                if (file_end_check === false) {
-                    // DateTime reflects latest date with a time of 00:00:00
-                    // * Creates new ledger entry: deduction to SAVINGS
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
-
-                    // * Creates new ledger entry: increment to CURRENT
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
-                // ! If file-end, transfers occur
-                } else {
-                    // DateTime utilises final input as successive DateTime is unknown at file-end
-                    // * Creates new ledger entry: deduction to SAVINGS
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime, -temp_value);
-
-                    // * Creates new ledger entry: increment to CURRENT
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime, temp_value);
-                }
+                ledger_function(file_end_check);
             }
 
-        // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
+            // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
         } else if (Accounts[key].current < 0 && Accounts[key].savings < Math.abs(Accounts[key].current)) {
 
-            temp_value = Accounts[key].savings;
+            transfer_value = Accounts[key].savings;
 
+            amendment_function();
+
+            // Solves LedgerEntry being made with a 0 transaction
+            if (transfer_value > 0) {
+
+                ledger_function(file_end_check);
+            }
+        }
+
+        function amendment_function() {
             // * Deducts SAVINGS
-            Accounts[key].savings -= temp_value;
+            Accounts[key].savings -= transfer_value;
             // Rounds SAVINGS to 2decimal places
             let savings_round = Accounts[key].savings;
             Accounts[key].savings = parseFloat(savings_round.toFixed(2));
             // * Increments CURRENT
-            Accounts[key].current += temp_value;
+            Accounts[key].current += transfer_value;
             // Rounds CURRENT to 2decimal places
             let current_round = Accounts[key].current;
             Accounts[key].current = parseFloat(current_round.toFixed(2));
-
-            // Solves LedgerEntry being made with a 0 transaction
-            if (temp_value > 0) {
-
-                // ! If a new date is recognised, transfers occur
-                if (file_end_check === false) {
-                    // DateTime reflects latest date with a time of 00:00:00
-                    // * Creates new ledger entry: deduction to SAVINGS
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
-
-                    // * Creates new ledger entry: increment to CURRENT
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
-                // ! If file-end, transfers occur
-                } else {
-                    // DateTime used as correct day-end date is unknown
-                    // * Creates new ledger entry: deduction to SAVINGS
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime, -temp_value);
-
-                    // * Creates new ledger entry: increment to CURRENT
-                    ledger_tracker++;
-                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime, temp_value);
-                }
-            }
         }
-        temp_value = 0;
+
+        function ledger_function(file_end_check) {
+            let new_DateTime;
+            if (file_end_check === false) {
+                // new_DateTime reflects latest date with a time of 00:00:00
+                new_DateTime = DateTime.substr(0, 10) + "T00:00:00Z";
+            } else {
+                // new_DateTime utilises final input as successive DateTime is unknown at file-end
+                new_DateTime = DateTime;
+            }
+            
+            // * Creates new ledger entry: deduction to SAVINGS
+            ledger_tracker++;
+            Ledger[ledger_tracker] = new LedgerEntry(amendment_ID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -transfer_value);
+
+            // * Creates new ledger entry: increment to CURRENT
+            ledger_tracker++;
+            Ledger[ledger_tracker] = new LedgerEntry(amendment_ID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", transfer_value);
+        }
+        transfer_value = 0;
     }
 }
 
 
 // CSV PARSER
-fs.createReadStream(csv_input)
+fs.createReadStream('csv_input/test_7.csv')
 
     .pipe(csv())
     .on('data', function (data) {
@@ -197,7 +171,7 @@ fs.createReadStream(csv_input)
                     date_tracker.push(date_only);
 
                     // Completes auto_transfers before CSV input transactions if date_only is new
-                    amendmentFunction(false);
+                    amendment_check(false);
                 }
             }
             date_checker();
@@ -210,12 +184,12 @@ fs.createReadStream(csv_input)
                 if (AccountType === "SAVINGS" && TransactionValue < 0 && Accounts[AccountID].savings === 0) {
                     ledger_tracker--;
                     return;
-                // If SAVINGS does not have enough for full withdrawal, ledger entry reflects amendment
+                    // If SAVINGS does not have enough for full withdrawal, ledger entry reflects amendment
                 } else if (AccountType === "SAVINGS" && TransactionValue < 0 && Math.abs(TransactionValue) > Accounts[AccountID].savings) {
                     Ledger[ledger_tracker] = new LedgerEntry(AccountID, AccountType, InitiatorType, DateTime, -Accounts[AccountID].savings);
 
-                // * REGULAR LEDGER ENTRIES
-                // Replicated ledger entry if no problem with transaction
+                    // * REGULAR LEDGER ENTRIES
+                    // Replicated ledger entry if no problem with transaction
                 } else {
                     Ledger[ledger_tracker] = new LedgerEntry(AccountID, AccountType, InitiatorType, DateTime, TransactionValue);
                 }
@@ -229,13 +203,13 @@ fs.createReadStream(csv_input)
                 if (AccountType === "CURRENT") {
                     Accounts[AccountID].current += TransactionValue;
 
-                // * SAVINGS transaction
+                    // * SAVINGS transaction
                 } else if (AccountType === "SAVINGS") {
                     // (1) - if withdrawal is made from SAVINGS but the required sum does not exist, only the total available amount is transferred
                     // i.e. SAVINGS does not drop below 0
                     if (TransactionValue < 0 && Accounts[AccountID].savings < Math.abs(TransactionValue)) {
                         Accounts[AccountID].savings -= Accounts[AccountID].savings;
-                    // (2) - regular SAVINGS transaction
+                        // (2) - regular SAVINGS transaction
                     } else {
                         Accounts[AccountID].savings += TransactionValue;
                     }
@@ -261,26 +235,26 @@ fs.createReadStream(csv_input)
 
         // ! Calls final amendment checks
         // Boolean is passed instructing the function of a file-end check
-        amendmentFunction(true);
+        amendment_check(true);
 
         // ! Turns all AccountIDs to integers and TransactionValues into 2decimal strings
-        function valueFunction() {
+        function conversion_function() {
             for (const key in Ledger) {
                 // AccountIDs to integer
-                let IDvalue = Ledger[key].AccountID;
-                IDvalue = Number(IDvalue);
-                Ledger[key].AccountID = IDvalue;
+                let ID_value = Ledger[key].AccountID;
+                ID_value = Number(ID_value);
+                Ledger[key].AccountID = ID_value;
 
                 // TransactionValues to 2decimal strings
-                let decimalValue = Ledger[key].TransactionValue;
-                decimalValue = decimalValue.toFixed(2);
-                Ledger[key].TransactionValue = decimalValue;
+                let decimal_value = Ledger[key].TransactionValue;
+                decimal_value = decimal_value.toFixed(2);
+                Ledger[key].TransactionValue = decimal_value;
             }
         }
-        valueFunction();
+        conversion_function();
 
         // ! Pushes Ledger into correct format for the CSV writer
-        function recordsMaker() {
+        function records_maker() {
             for (const key in Ledger) {
                 const LedgerItems = Ledger[key];
                 records.push({
@@ -292,13 +266,13 @@ fs.createReadStream(csv_input)
                 })
             }
         }
-        recordsMaker();
+        records_maker();
 
         // CSV WRITER
         const createCsvWriter = require('csv-writer').createObjectCsvWriter;
         const csvWriter = createCsvWriter({
 
-            path: csv_output,
+            path: 'csv_output/esther_7_test_3.csv',
             header: [{
                     id: 'accountid',
                     title: 'AccountID'
