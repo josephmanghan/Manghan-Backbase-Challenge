@@ -70,7 +70,7 @@ node manghan-backbase-challenge.js input_file.csv output_file.csv
 ## Assumptions
 Several assumptions have been made with regards to input data and how that data is processed:
 - Input CSV file data is ordered chronologically
-- The less overdraft used, the better - funds are transferred to a current account even if total sum to black is unavailable
+- The less overdraft used, the better - funds are transferred to a current account even if the sum required to completely remove debt is unavailable
 - If a customer attempts to make a savings account withdrawal, but the requested amount is unavailable, the customer wishes to receive the greatest amount possible. This will be reflected in the ledger
 - If a customer attempts to make a savings account withdrawal, but no funds are available, the card is "declined" and the transaction is removed from the ledger
 
@@ -83,7 +83,7 @@ CSV files have been provided for testing, a rundown of which is given below, but
 - **Test_2**: simplified brief CSV file, for single account testing (script can now handle multiple accounts)
 - **Test_3**: day-end automatic transfers test
 - **Test_4**: savings withdrawal test - requested funds unavailable, maximum amount withdrawn
-- **Test_5**: automatic transfer test - maximum possible transfer from savings to current account when total sum to black in unavailable
+- **Test_5**: automatic transfer test - maximum possible transfer from savings to current account when sum to black in unavailable
 - **Test_6**: combined above
 - **Test_7**: large randomised test
 
