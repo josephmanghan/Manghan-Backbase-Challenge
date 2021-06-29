@@ -50,7 +50,7 @@ The script receives data from an input CSV file containing a ledger of transacti
 
 Install all dependencies using npm:
 ```console
-$ npm install
+ npm install
 ```
 - - -
 
