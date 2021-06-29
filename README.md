@@ -92,6 +92,14 @@ The following features were unable to be addressed within the scope of the proje
 - **Card decline** - when a withdrawal is attempted from a savings account with £0.00, the transaction is removed from the ledger as a transaction was not completed. However, ideally the data would reflect a “declined” withdrawal. I felt the removal of the entry was more appropriate than adding a £0.00 transaction to the ledger.
 - **Day-end *DateTime*** - the function for making automatic transfer ledger entries involves taking the date from the inputted *DateTime* when a new date has been recognised in the input CSV file. 00:00:00 is appended to this, which signifies the end of one day and the beginning of another. Unfortunately this does not translate to the final check at file-end as the subsequent date is unknown to the script, and so *DateTime* in this case mirrors the *DateTime* of the final transaction of the input CSV. Ideally this entry would reflect a successive date with a time of 00:00:00, as with previous day-end amendments.
 
+## Acknowledgements
+
+The resources listed below were used as references for building certain elements of the project:
+- **Chris Pietschmann**: [Account and Ledger object creation](https://pietschsoft.com/post/2015/09/05/javascript-basics-how-to-create-a-dictionary-with-keyvalue-pairs)
+- **Stack Overflow**: [Creating a correctly formatted array for csv-writer](https://stackoverflow.com/questions/35898309/javascript-pushing-objects-into-array)
+- dfd
+  - cvc
+
 ## Contact
 Dr Joseph Manghan - josephmanghan@gmail.com
 
