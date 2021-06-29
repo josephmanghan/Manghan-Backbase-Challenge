@@ -50,16 +50,111 @@ let temp_value;
 let ID_array = [];
 let amendmentID;
 
-// Used in creating correct AccountIDs for amendment ledger entries at file end
-let ID_array2 = [];
-let ID_tracker2 = 0;
-let amendmentID_2;
-
 // Used to notify when a new date has been received
 const date_tracker = [];
 // Used to substr date information from DateTime for amendment ledger entries
 let date_only;
 
+// ! AMENDMENT TRANSFERS AND LEDGER ENTRIES
+// file_end_check - boolean argument instructing function of day-end/file-end check
+function amendmentFunction(file_end_check) {
+    let ID_tracker = -1;
+    for (const key in Accounts) {
+
+        // Used to apply correct AccountID to amendment ledger entries
+        ID_array = Object.keys(Accounts);
+
+        ID_tracker++;
+        amendmentID = Number(ID_array[ID_tracker]);
+
+        // * Transfers SAVINGS to CURRENT if sum to black is available
+        if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
+
+            // Finds the sum needed to bring CURRENT into the black 
+            temp_value = Math.abs(Accounts[key].current);
+
+            // * Deducts SAVINGS
+            Accounts[key].savings -= temp_value;
+            // Rounds SAVINGS to 2decimal places
+            let savings_round = Accounts[key].savings;
+            Accounts[key].savings = parseFloat(savings_round.toFixed(2));
+            // * Increments CURRENT
+            Accounts[key].current += temp_value;
+            // Rounds CURRENT to 2decimal places
+            let current_round = Accounts[key].current;
+            Accounts[key].current = parseFloat(current_round.toFixed(2));
+
+            // Solves LedgerEntry being made with a 0 transaction
+            if (temp_value > 0) {
+
+                // ! If a new date is recognised, transfers occur
+                if (file_end_check === false) {
+                    // DateTime reflects latest date with a time of 00:00:00
+                    // * Creates new ledger entry: deduction to SAVINGS
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
+
+                    // * Creates new ledger entry: increment to CURRENT
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
+                // ! If file-end, transfers occur
+                } else {
+                    // DateTime utilises final input as successive DateTime is unknown at file-end
+                    // * Creates new ledger entry: deduction to SAVINGS
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime, -temp_value);
+
+                    // * Creates new ledger entry: increment to CURRENT
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime, temp_value);
+                }
+            }
+
+        // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
+        } else if (Accounts[key].current < 0 && Accounts[key].savings < Math.abs(Accounts[key].current)) {
+
+            temp_value = Accounts[key].savings;
+
+            // * Deducts SAVINGS
+            Accounts[key].savings -= temp_value;
+            // Rounds SAVINGS to 2decimal places
+            let savings_round = Accounts[key].savings;
+            Accounts[key].savings = parseFloat(savings_round.toFixed(2));
+            // * Increments CURRENT
+            Accounts[key].current += temp_value;
+            // Rounds CURRENT to 2decimal places
+            let current_round = Accounts[key].current;
+            Accounts[key].current = parseFloat(current_round.toFixed(2));
+
+            // Solves LedgerEntry being made with a 0 transaction
+            if (temp_value > 0) {
+
+                // ! If a new date is recognised, transfers occur
+                if (file_end_check === false) {
+                    // DateTime reflects latest date with a time of 00:00:00
+                    // * Creates new ledger entry: deduction to SAVINGS
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
+
+                    // * Creates new ledger entry: increment to CURRENT
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
+                // ! If file-end, transfers occur
+                } else {
+                    // DateTime used as correct day-end date is unknown
+                    // * Creates new ledger entry: deduction to SAVINGS
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime, -temp_value);
+
+                    // * Creates new ledger entry: increment to CURRENT
+                    ledger_tracker++;
+                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime, temp_value);
+                }
+            }
+        }
+        temp_value = 0;
+    }
+}
 
 
 // CSV PARSER
@@ -80,8 +175,7 @@ fs.createReadStream(csv_input)
         TransactionValue = parseFloat(value_conversion);
 
 
-
-        // ! PARENT FUNCTION
+        // ! MAIN FUNCTION
         function challenge(AccountID, AccountType, InitiatorType, DateTime, TransactionValue) {
 
             // ! ACCOUNT MAKER - Checks if ID is new, creates account if needed
@@ -94,90 +188,19 @@ fs.createReadStream(csv_input)
             }
             account_maker(AccountID);
 
-            // ! AMENDMENT TRANSFERS AND LEDGER ENTRIES
-            // If date is new, transfers from SAVINGS to CURRENT where possible and creates a ledger entry
-            function auto_transfer() {
+            // * Checks to see if date is new
+            function date_checker() {
 
-                // Checks to see if the date is new and if so adds to date_tracker array
+                // If date is new, added to date_tracker array
                 date_only = DateTime.substr(0, 10);
                 if (!date_tracker.includes(date_only)) {
                     date_tracker.push(date_only);
 
-                    let ID_tracker = -1;
-                    // Completes auto_transfers before CSV input if date_only is new
-                    for (const key in Accounts) {
-
-                        // Used to apply correct AccountID to amendment ledger entries
-                        ID_array = Object.keys(Accounts);
-
-                        ID_tracker++;
-                        amendmentID = Number(ID_array[ID_tracker]);
-
-                        // * Transfers SAVINGS to CURRENT if sum to black is available
-                        if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
-
-                            // Finds the sum needed to bring CURRENT into the black 
-                            temp_value = Math.abs(Accounts[key].current);
-
-                            // * Deducts SAVINGS
-                            Accounts[key].savings -= temp_value;
-                            // Rounds SAVINGS to 2decimal places
-                            let savings_round = Accounts[key].savings;
-                            Accounts[key].savings = parseFloat(savings_round.toFixed(2));
-                            // * Increments CURRENT
-                            Accounts[key].current += temp_value;
-                            // Rounds CURRENT to 2decimal places
-                            let current_round = Accounts[key].current;
-                            Accounts[key].current = parseFloat(current_round.toFixed(2));
-
-                            // Solves LedgerEntry being made when a 0 transaction occurs
-                            if (temp_value > 0) {
-
-
-                                // DateTime reflects date of current day with a time of 00:00:00
-                                // * Creates new ledger entry: deduction to SAVINGS
-                                ledger_tracker++;
-                                Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
-
-                                // * Creates new ledger entry: increment to CURRENT
-                                ledger_tracker++;
-                                Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
-                            }
-
-                            // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
-                            } else if (Accounts[key].current < 0 && Accounts[key].savings < Math.abs(Accounts[key].current)) {
-
-                            temp_value = Accounts[key].savings;
-
-                            // * Deducts SAVINGS
-                            Accounts[key].savings -= temp_value;
-                            // Rounds SAVINGS to 2decimal places
-                            let savings_round = Accounts[key].savings;
-                            Accounts[key].savings = parseFloat(savings_round.toFixed(2));
-                            // * Increments CURRENT
-                            Accounts[key].current += temp_value;
-                            // Rounds CURRENT to 2decimal places
-                            let current_round = Accounts[key].current;
-                            Accounts[key].current = parseFloat(current_round.toFixed(2));
-
-                                // Fixes LedgerEntrys being made with a 0 transaction
-                                if (temp_value > 0) {
-
-
-                                    // * Creates new ledger entry: deduction to SAVINGS
-                                    ledger_tracker++;
-                                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "SAVINGS", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", -temp_value);
-
-                                    // * Creates new ledger entry: increment to CURRENT
-                                    ledger_tracker++;
-                                    Ledger[ledger_tracker] = new LedgerEntry(amendmentID, "CURRENT", "SYSTEM", DateTime.substr(0, 10) + "T00:00:00Z", temp_value);
-                                }
-                        }
-                        temp_value = 0;
-                    }
+                    // Completes auto_transfers before CSV input transactions if date_only is new
+                    amendmentFunction(false);
                 }
             }
-            auto_transfer();
+            date_checker();
 
             // ! LEDGER - Creates a ledger entry for CSV input entries
             function ledger_entry(AccountID, AccountType, InitiatorType, DateTime, TransactionValue) {
@@ -228,7 +251,7 @@ fs.createReadStream(csv_input)
 
             return;
         }
-        // ! END PARENT FUNCTION   
+        // ! END MAIN FUNCTION   
 
         challenge(AccountID, AccountType, InitiatorType, DateTime, TransactionValue);
     })
@@ -236,84 +259,14 @@ fs.createReadStream(csv_input)
     // Post CSV input
     .on('end', () => {
 
-        // ! FINAL CHECK FOR POSSIBLE SAVINGS TO CURRENT TRANSFERS AT FILE END
-        function finalAmendments() {
-            for (const key in Accounts) {
+        // ! Calls final amendment checks
+        // Boolean is passed instructing the function of a file-end check
+        amendmentFunction(true);
 
-                // Used to apply correct AccountID to amendment ledger entries at file end
-                ID_array2 = Object.keys(Accounts);
-                amendmentID_2 = Number(ID_array2[ID_tracker2]);
-
-                // * Transfers SAVINGS to CURRENT if sum to black is available
-                if (Accounts[key].current < 0 && Accounts[key].savings > Math.abs(Accounts[key].current)) {
-
-                    // Finds the sum needed to bring CURRENT into the black 
-                    temp_value = Math.abs(Accounts[key].current);
-
-                    // * Deducts SAVINGS
-                    Accounts[key].savings -= temp_value;
-                    // Rounds SAVINGS to 2decimal places
-                    let savings_round = Accounts[key].savings;
-                    Accounts[key].savings = parseFloat(savings_round.toFixed(2));
-                    // * Increments CURRENT
-                    Accounts[key].current += temp_value;
-                    // Rounds CURRENT to 2decimal places
-                    let current_round = Accounts[key].current;
-                    Accounts[key].current = parseFloat(current_round.toFixed(2));
-
-                    // Solves LedgerEntry being made when a 0 transaction occurs
-                    if (temp_value > 0) {
-
-
-                        // DateTime used as correct day-end date is unknown
-                        // * Creates new ledger entry: deduction to SAVINGS
-                        ledger_tracker++;
-                        Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
-
-                        // * Creates new ledger entry: increment to CURRENT
-                        ledger_tracker++;
-                        Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
-                    }
-
-                    // * Transfers SAVINGS to CURRENT if SAVINGS has £ but not enough for sum to black  
-                    } else if (Accounts[key].current < 0 && Accounts[key].savings < Math.abs(Accounts[key].current)) {
-
-                    temp_value = Accounts[key].savings;
-
-                    // * Deducts SAVINGS
-                    Accounts[key].savings -= temp_value;
-                    // Rounds SAVINGS to 2decimal places
-                    let savings_round = Accounts[key].savings;
-                    Accounts[key].savings = parseFloat(savings_round.toFixed(2));
-                    // * Increments CURRENT
-                    Accounts[key].current += temp_value;
-                    // Rounds CURRENT to 2decimal places
-                    let current_round = Accounts[key].current;
-                    Accounts[key].current = parseFloat(current_round.toFixed(2));
-
-                        // Fixes LedgerEntrys being made with a 0 transaction
-                        if (temp_value > 0) {
-
-
-                            // * Creates new ledger entry: deduction to SAVINGS
-                            // DateTime used as correct day-end date is unknown
-                            ledger_tracker++;
-                            Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "SAVINGS", "SYSTEM", DateTime, -temp_value);
-
-                            // * Creates new ledger entry: increment to CURRENT
-                            ledger_tracker++;
-                            Ledger[ledger_tracker] = new LedgerEntry(amendmentID_2, "CURRENT", "SYSTEM", DateTime, temp_value);
-                        }
-                }
-                ID_tracker2++;
-            }
-        }
-        finalAmendments();
-
-        // ! Turns all AccountIDs to numbers and TransactionValues into 2decimal strings
+        // ! Turns all AccountIDs to integers and TransactionValues into 2decimal strings
         function valueFunction() {
             for (const key in Ledger) {
-                // AccountIDs to Number
+                // AccountIDs to integer
                 let IDvalue = Ledger[key].AccountID;
                 IDvalue = Number(IDvalue);
                 Ledger[key].AccountID = IDvalue;
