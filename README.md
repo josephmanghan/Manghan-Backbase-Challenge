@@ -96,7 +96,7 @@ The following features were unable to be addressed within the scope of the proje
 ## Acknowledgements
 
 The resources listed below were used as references during the project, as certain elements were initially unfamiliar to me:
-- **Account and Ledger object creation, object iteration **: [pietschsoft.com](https://pietschsoft.com/post/2015/09/05/javascript-basics-how-to-create-a-dictionary-with-keyvalue-pairs)
+- **Account and Ledger object creation | object iteration**: [pietschsoft.com](https://pietschsoft.com/post/2015/09/05/javascript-basics-how-to-create-a-dictionary-with-keyvalue-pairs)
 - **Creating a correctly formatted array for csv-writer**: [Stack Overflow](https://stackoverflow.com/questions/35898309/javascript-pushing-objects-into-array)
 - **CLI interface**:
   - [nodejs.org](https://nodejs.org/en/knowledge/command-line/how-to-parse-command-line-arguments/)
