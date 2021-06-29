@@ -19,6 +19,7 @@
     <li><a href="#testing">Testing</a></li>
     <li><a href="#missing-features">Missing Features</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -94,11 +95,15 @@ The following features were unable to be addressed within the scope of the proje
 
 ## Acknowledgements
 
-The resources listed below were used as references for building certain elements of the project:
-- **Chris Pietschmann**: [Account and Ledger object creation](https://pietschsoft.com/post/2015/09/05/javascript-basics-how-to-create-a-dictionary-with-keyvalue-pairs)
-- **Stack Overflow**: [Creating a correctly formatted array for csv-writer](https://stackoverflow.com/questions/35898309/javascript-pushing-objects-into-array)
-- dfd
-  - cvc
+The resources listed below were used as references during the project, as certain elements were unfamiliar to me:
+- **Account and Ledger object creation**: [pietschsoft.com](https://pietschsoft.com/post/2015/09/05/javascript-basics-how-to-create-a-dictionary-with-keyvalue-pairs)
+- **Creating a correctly formatted array for csv-writer**: [Stack Overflow](https://stackoverflow.com/questions/35898309/javascript-pushing-objects-into-array)
+- **CLI interface**
+  - [nodejs.org](https://nodejs.org/en/knowledge/command-line/how-to-parse-command-line-arguments/)
+  - [Stack Overflow](https://stackoverflow.com/questions/4351521/how-do-i-pass-command-line-arguments-to-a-node-js-program#4351548)
+- **Readme**
+  - [github.com/othneildrew](https://github.com/othneildrew/Best-README-Template)
+  - [npmjs.com](https://docs.npmjs.com/cli/v7/commands/npm-install)
 
 ## Contact
 Dr Joseph Manghan - josephmanghan@gmail.com
