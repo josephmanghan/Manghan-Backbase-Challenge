@@ -83,7 +83,7 @@ CSV files have been provided for testing, a rundown of which is given below, but
 - **Test_2**: simplified brief CSV file, for single account testing (script can now handle multiple accounts)
 - **Test_3**: day-end automatic transfers test
 - **Test_4**: savings withdrawal test - requested funds unavailable, maximum amount withdrawn
-- **Test_5**: automatic transfer test - maximum possible transfer from savings to current account when sum to black in unavailable
+- **Test_5**: automatic transfer test - maximum possible transfer from savings to current account when sum to black is unavailable
 - **Test_6**: combined above
 - **Test_7**: large randomised test
 
