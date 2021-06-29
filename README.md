@@ -49,8 +49,8 @@ The script receives data from an input CSV file containing a ledger of transacti
 [csv-writer](https://www.npmjs.com/package/csv-writer)
 
 Install all dependencies using npm:
-```console
- npm install
+```sh
+   npm install
 ```
 - - -
 
